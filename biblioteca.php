@@ -26,11 +26,11 @@ if (mysqli_connect_errno()) {
         $orderby = "NOM_AUT DESC";
       }
 
-      if(isset($_POST['cercar'])){
+      if(isset($_POST['butcercar'])){
         $autor = $_POST['cerca'];
-        $query = "SELECT * FROM autors WHERE NOM_AUT LIKE '%" .$autor. "%'"; //ID_AUT = $valor or
+        $query = "SELECT * FROM autors WHERE NOM_AUT LIKE '%" .$autor. "%' limit 20"; //ID_AUT = $valor or
       }else{
-        $query = "SELECT * FROM autors ORDER BY $orderby";
+        $query = "SELECT * FROM autors ORDER BY $orderby limit 20";
       }
 ?>
 <!DOCTYPE html>
@@ -53,9 +53,12 @@ if (mysqli_connect_errno()) {
 <button name="ID_AUT_DESC" class="btn btn-dark">CODI DESCENDENT</button>
 <button name="NOM_AUT_ASC" class="btn btn-dark">NOM ASCENDENT</button>
 <button name="NOM_AUT_DESC" class="btn btn-dark">NOM DESCENDENT</button>
-<form action="/action_page.php">
+<button name="PRIMER" class="btn btn-dark">PRIMER</button>
+<button name="DARRER" class="btn btn-dark">DARRER</button>
+<button name="SEGUENT" class="btn btn-dark">SEGÜENT</button>
+<button name="ANTERIOR" class="btn btn-dark">ANTERIOR</button>
       <input type="text" placeholder="Cerca.." name="cerca" id="cerca">
-      <button class="btn btn-dark" id="cercar" >CERCA</button>
+      <button class="btn btn-dark" id="butcercar" name="butcercar">CERCA</button>
     </form>
   <table class="table table-dark table-striped">
     <thead>
