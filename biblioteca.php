@@ -7,9 +7,14 @@ echo "Connection error: ".mysqli_connect_error();
 
 if (mysqli_connect_errno()) {
         printf("Error: %s\n", mysqli_connect_error()); exit();
-     }
-     $orderby = "ID_AUT ASC";
-     $autor="";
+      }
+      $orderby = "ID_AUT ASC";
+      $autor="";
+      $codi="";
+      $limits = "limit 20";
+      $row=['ID_AUT'];
+      // $query = "SELECT * FROM autors ORDER BY $orderby $limits";
+      // $lines = mysql_num_rows($query);
      
      if(isset($_POST['ID_AUT_ASC'])){
        $orderby = "ID_AUT ASC";
@@ -28,9 +33,23 @@ if (mysqli_connect_errno()) {
 
       if(isset($_POST['butcercar'])){
         $autor = $_POST['cerca'];
-        $query = "SELECT * FROM autors WHERE NOM_AUT LIKE '%" .$autor. "%' limit 20"; //ID_AUT = $valor or
+        $query = "SELECT * FROM autors WHERE NOM_AUT LIKE '%" .$autor. "%' $limits"; //ID_AUT = $valor or
       }else{
-        $query = "SELECT * FROM autors ORDER BY $orderby limit 20";
+        $query = "SELECT * FROM autors ORDER BY $orderby $limits";
+      }
+      if(isset($_POST['butcercarC'])){
+        $codi = $_POST['cercaC'];
+        $query = "SELECT * FROM autors WHERE ID_AUT LIKE '%" .$codi. "%' $limits"; //ID_AUT = $valor or
+      }else{
+        $query = "SELECT * FROM autors ORDER BY $orderby $limits";
+      }
+
+      if(isset($_POST['PRIMER'])){
+        $query = "SELECT * FROM autors ORDER BY $orderby $limits";
+       
+      }
+      if(isset($_POST['SEGUENT'])){
+        $query = "SELECT * FROM autors ORDER BY $orderby $limits";
       }
 ?>
 <!DOCTYPE html>
@@ -42,9 +61,9 @@ if (mysqli_connect_errno()) {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <title>Document</title>
+    <title>biblioteca</title>
 </head>
-<body>
+<body class="b">
 
 <form action="" method="POST">
 <div class="container">
@@ -57,8 +76,10 @@ if (mysqli_connect_errno()) {
 <button name="DARRER" class="btn btn-dark">DARRER</button>
 <button name="SEGUENT" class="btn btn-dark">SEGÜENT</button>
 <button name="ANTERIOR" class="btn btn-dark">ANTERIOR</button>
-      <input type="text" placeholder="Cerca.." name="cerca" id="cerca">
-      <button class="btn btn-dark" id="butcercar" name="butcercar">CERCA</button>
+      <input type="text" placeholder="Cerca NOM..." name="cerca" id="cerca">
+      <button class="btn btn-dark" id="butcercar" name="butcercar">CERCA PER NOM</button>
+      <input type="text" placeholder="Cerca CODI..." name="cercaC" id="cercaC">
+      <button class="btn btn-dark" id="butcercarC" name="butcercarC">CERCA PER ID</button>
     </form>
   <table class="table table-dark table-striped">
     <thead>
