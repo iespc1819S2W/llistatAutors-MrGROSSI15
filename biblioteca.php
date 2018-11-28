@@ -25,7 +25,7 @@ if (mysqli_connect_errno()) {
       $result= $mysqli->query("SELECT * FROM autors WHERE NOM_AUT LIKE '%" .$cerca. "%' OR ID_AUT LIKE '%" .$cerca. "%'");
     
       $numRegistresPag= mysqli_num_rows($result);
-      $numPag= ceil($numRegistresPag/$limits);
+      $numPag= ceil($numRegistresPag/$limits) -1 ;
 
      if(isset($_POST['ID_AUT_ASC'])){
        $orderby = "ID_AUT ASC";
@@ -93,7 +93,7 @@ if (mysqli_connect_errno()) {
 <button name="ANTERIOR" class="btn btn-dark">ANTERIOR</button>
   <input type="hidden" value="<?=$pagina?>" name="pagina" id="pagina">
   <input type="hidden" value="<?=$orderby?>" name="orderby" id="orderby">
-      <input type="text" placeholder="Cerca NOM..." name="cerca" id="cerca" value="<?=$cerca?>">
+      <input type="text" placeholder="Cerca NOM o ID..." name="cerca" id="cerca" value="<?=$cerca?>">
       <button class="btn btn-dark" id="butcercar" name="butcercar">CERCA PER NOM i ID</button>
       
       
