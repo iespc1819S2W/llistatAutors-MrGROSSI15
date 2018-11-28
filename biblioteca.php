@@ -76,27 +76,38 @@ if (mysqli_connect_errno()) {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <title>biblioteca</title>
 </head>
-<body class="b">
+<body class="b" style="background-color: #212529">
 
-<form action="" method="POST">
 <div class="container">
-  <h2>BIBLIOTECA</h2>
-<button name="ID_AUT_ASC" class="btn btn-dark">CODI ASCENDENT</button>
-<button name="ID_AUT_DESC" class="btn btn-dark">CODI DESCENDENT</button>
-<button name="NOM_AUT_ASC" class="btn btn-dark">NOM ASCENDENT</button>
-<button name="NOM_AUT_DESC" class="btn btn-dark">NOM DESCENDENT</button>
-<button name="PRIMER" class="btn btn-dark">PRIMER</button>
-<button name="DARRERA" class="btn btn-dark">DARRERA</button>
-<button name="SEGUENT" class="btn btn-dark">SEGÜENT</button>
-<button name="ANTERIOR" class="btn btn-dark">ANTERIOR</button>
+<form action="" method="POST">
+  <h1 style="color: white">BIBLIOTECA</h1>
+  <h3  style="color: white">Ordenacions</h3>
+  
+<button name="ID_AUT_ASC" class="btn btn-dark">CODI<i class="fas fa-sort-up"></i></button>
+<button name="ID_AUT_DESC" class="btn btn-dark">CODI<i class="fas fa-sort-down"></i></button>
+<button name="NOM_AUT_ASC" class="btn btn-dark">NOM<i class="fas fa-sort-up"></i></button>
+<button name="NOM_AUT_DESC" class="btn btn-dark">NOM<i class="fas fa-sort-down"></i></button>
+
+
   <input type="hidden" value="<?=$pagina?>" name="pagina" id="pagina">
   <input type="hidden" value="<?=$orderby?>" name="orderby" id="orderby">
+  <label>
       <input type="text" placeholder="Cerca NOM o ID..." name="cerca" id="cerca" value="<?=$cerca?>">
-      <button class="btn btn-dark" id="butcercar" name="butcercar">CERCA PER NOM i ID</button>
+      <button class="btn btn-dark" id="butcercar" name="butcercar">CERCA PER NOM o ID</button>
+  </label>
+      <label>
+      <!-- <h3>Paginacions</h3> -->
+<button name="PRIMER" class="btn btn-dark"><i class="fas fa-angle-double-left"></i></button>
+<button name="ANTERIOR" class="btn btn-dark"><i class="fas fa-angle-left"></i></button>
+<button name="SEGUENT" class="btn btn-dark"><i class="fas fa-angle-right"></i></button>
+<button name="DARRERA" class="btn btn-dark"><i class="fas fa-angle-double-right"></i></button>
+      </label>
       
-      
+    </form>
+    <form>
     </form>
   <table class="table table-dark table-striped">
     <thead>
@@ -108,12 +119,12 @@ if (mysqli_connect_errno()) {
     <tbody>
 <?php 
 // $query =("SELECT * FROM autors ORDER BY $orderby limit 10 ");
-echo($query);
+//echo($query);
 if ($result = $mysqli->query($query)) {
     while ($row = $result->fetch_assoc()) {
         echo ("<tr>");
         echo ("<th scope='row'> ". $row["ID_AUT"]."</th>");
-        echo("<td>". $row["NOM_AUT"] . "</td>"); 
+        echo("<td>". $row["NOM_AUT"] .'<button name="borrar" style="float: right" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>' .  '<button name="editar" style="float: right" class="btn btn-info"><i class="fas fa-edit"></i></button>' . "</td>");
         echo ("</tr>");
     }
 }
