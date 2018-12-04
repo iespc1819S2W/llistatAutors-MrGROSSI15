@@ -16,7 +16,7 @@ if (mysqli_connect_errno()) {
       if(isset($_POST['cerca'])){
         $cerca = $_POST['cerca'];
       }
-      
+
       $limits = 20;
       $pagina= 0;
       if(isset($_POST['pagina'])){
@@ -44,8 +44,7 @@ if (mysqli_connect_errno()) {
       
       
       if(isset($_POST['PRIMER'])){
-        $pagina=0;
-        
+        $pagina=0;  
       }
       
       if(isset($_POST['SEGUENT'])){
@@ -59,11 +58,21 @@ if (mysqli_connect_errno()) {
         }
       }
       if(isset($_POST['DARRERA'])){
-        
           $pagina = $numPag;
+      }
+
+      if(isset($_POST['borrar'])){
+        $id = $_POST['borrar'];
+        $result= $mysqli->query("DELETE FROM autors WHERE autors.ID_AUT = $id");
+      }
+
+      $idEditar = "";
+      if(isset($_POST['editar'])){
+        $idEditar = $_POST['editar'];
         
       }
       
+      echo(print_r($_POST));
       $tuplaInici=$pagina * $limits;
       $query = "SELECT * FROM autors WHERE NOM_AUT LIKE '%" .$cerca. "%' OR ID_AUT LIKE '%" .$cerca. "%' ORDER BY $orderby LIMIT $tuplaInici,$limits"; 
  ?>
@@ -80,6 +89,7 @@ if (mysqli_connect_errno()) {
     <title>biblioteca</title>
 </head>
 <body class="b" style="background-color: #212529">
+
 
 <div class="container">
 <form action="" method="POST">
@@ -104,11 +114,11 @@ if (mysqli_connect_errno()) {
 <button name="ANTERIOR" class="btn btn-dark"><i class="fas fa-angle-left"></i></button>
 <button name="SEGUENT" class="btn btn-dark"><i class="fas fa-angle-right"></i></button>
 <button name="DARRERA" class="btn btn-dark"><i class="fas fa-angle-double-right"></i></button>
+<button name="INSERTAR" class="btn btn-dark"><i></i>INSERTAR</button>
       </label>
-      
-    </form>
-    <form>
-    </form>
+      <!-- EDICIONS -->
+      <!-- <button name="borrar" id="borrar" style="float: right" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+      <button name="editar" id="editar" style="float: right" class="btn btn-info"><i class="fas fa-edit"></i></button> -->
   <table class="table table-dark table-striped">
     <thead>
       <tr>
@@ -124,17 +134,15 @@ if ($result = $mysqli->query($query)) {
     while ($row = $result->fetch_assoc()) {
         echo ("<tr>");
         echo ("<th scope='row'> ". $row["ID_AUT"]."</th>");
-        echo("<td>". $row["NOM_AUT"] .'<button name="borrar" style="float: right" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>' .  '<button name="editar" style="float: right" class="btn btn-info"><i class="fas fa-edit"></i></button>' . "</td>");
+        echo("<td>". $row["NOM_AUT"] .'<button name="borrar" id="borrar" value="'.$row['ID_AUT'].'" style="float: right" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>' .  '<button name="editar" id="editar" value="'.$row['ID_AUT'].'" style="float: right" class="btn btn-info"><i class="fas fa-edit"></i></button>' . "</td>");
         echo ("</tr>");
     }
 }
-
-
+// si s'autor que vull pintar es = a ID_AUT obrim la fila amb un input recollir quin es l'autor a editar dins una variable i posar en edicio l'autor
 ?>
     </tbody>
   </table>
 </form>
 </div>
-
 </body>
 </html>
