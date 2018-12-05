@@ -67,8 +67,8 @@ if (mysqli_connect_errno()) {
       }
 
       $idEditar = 0;
-      if(isset($_POST['btEditar'])){
-        $idEditar = $_POST['btEditar'];
+      if(isset($_POST['editar'])){
+        $idEditar = $_POST['editar'];
         
       }
       
