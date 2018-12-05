@@ -66,9 +66,9 @@ if (mysqli_connect_errno()) {
         $result= $mysqli->query("DELETE FROM autors WHERE autors.ID_AUT = $id");
       }
 
-      $idEditar = "";
-      if(isset($_POST['editar'])){
-        $idEditar = $_POST['editar'];
+      $idEditar = 0;
+      if(isset($_POST['btEditar'])){
+        $idEditar = $_POST['btEditar'];
         
       }
       
@@ -86,10 +86,22 @@ if (mysqli_connect_errno()) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <title>biblioteca</title>
+    <title>BIBLIOTECA</title>
+    <!-- <script>
+    window.onload = function () {
+      document.getElementById("editar").onclick = function(){
+        var fila = document.getElementById("fila");
+        var input = document.createElement("input");
+        input.setAttribute("type", "text");
+        input.setAttribute("name", "edicio");
+        input.setAttribute("id", "<?=$row['NOM_AUT']?>");
+        fila.appendChild(input);
+      }
+    }
+    </script> -->
+    
 </head>
 <body class="b" style="background-color: #212529">
-
 
 <div class="container">
 <form action="" method="POST">
@@ -127,19 +139,42 @@ if (mysqli_connect_errno()) {
       </tr>
     </thead>
     <tbody>
-<?php 
-// $query =("SELECT * FROM autors ORDER BY $orderby limit 10 ");
-//echo($query);
+
+<!-- // $query =("SELECT * FROM autors ORDER BY $orderby limit 10 ");
+//echo($query); -->
+<?php
 if ($result = $mysqli->query($query)) {
-    while ($row = $result->fetch_assoc()) {
-        echo ("<tr>");
+  while ($row = $result->fetch_assoc()) {?>
+    <tr>
+    <th id="idAut"><?=$row['ID_AUT']?></th>
+   
+    <td id="nomAut">
+    <?php if($idEditar == $row['ID_AUT']){?> 
+
+    <input type="text" name="edicio" id="edicio" value="<?=$row['NOM_AUT']?>">
+    <button name="confirmar" id="btConfirmar" style="float: right" class="btn btn-success">CONFIRMAR</button>
+    <button name="cancelar" id="btCancelar" style="float: right" class="btn btn-danger">CANCELAR</button>
+    <?php 
+    $idEditar = 0;
+    }else{
+      echo $row["NOM_AUT"]; ?>
+
+      <button name="borrar" id="btBorrar" value="<?=$row['ID_AUT']?>" style="float: right" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+      <button name="editar" id="btEditar" value="<?=$row['ID_AUT']?>" style="float: right" class="btn btn-info"><i class="fas fa-edit"></i></button>
+    <?php
+    }?>
+    </td>
+   
+    </tr>
+        <!-- echo ("<tr>");
         echo ("<th scope='row'> ". $row["ID_AUT"]."</th>");
         echo("<td>". $row["NOM_AUT"] .'<button name="borrar" id="borrar" value="'.$row['ID_AUT'].'" style="float: right" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>' .  '<button name="editar" id="editar" value="'.$row['ID_AUT'].'" style="float: right" class="btn btn-info"><i class="fas fa-edit"></i></button>' . "</td>");
-        echo ("</tr>");
-    }
-}
-// si s'autor que vull pintar es = a ID_AUT obrim la fila amb un input recollir quin es l'autor a editar dins una variable i posar en edicio l'autor
-?>
+        echo ("</tr>"); -->
+ <?php   }
+}?>
+
+<!-- // si s'autor que vull pintar es = a ID_AUT obrim la fila amb un input recollir quin es l'autor a editar dins una variable i posar en edicio l'autor -->
+
     </tbody>
   </table>
 </form>
