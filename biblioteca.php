@@ -159,7 +159,8 @@ if (isset($_POST['INSERTAR'])) { ?>
     <thead>
       <tr>
         <th>"ID_AUT"</th>
-        <th>"NOM_AUT"</th> 
+        <th>"FK_NACIONALITAT"</th> 
+        <th>"NOM_AUT"</th>
       </tr>
     </thead>
     <tbody>
@@ -171,7 +172,10 @@ if ($result = $mysqli->query($query)) {
   while ($row = $result->fetch_assoc()) {?>
     <tr>
     <th id="idAut"><?=$row['ID_AUT']?></th>
-   
+    <td>
+    <?=$row['FK_NACIONALITAT']?>
+    
+    </td>
     <td id="nomAut">
     <?php if($idEditar == $row['ID_AUT']){?> 
 
@@ -181,13 +185,17 @@ if ($result = $mysqli->query($query)) {
     <?php 
     $idEditar = 0;
     }else{
-      echo $row["NOM_AUT"]; ?>
+      
+      echo $row["NOM_AUT"]; 
+      ?>
 
       <button name="borrar" id="btBorrar" value="<?=$row['ID_AUT']?>" style="float: right" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
       <button name="editar" id="btEditar" value="<?=$row['ID_AUT']?>" style="float: right" class="btn btn-info"><i class="fas fa-edit"></i></button>
+    
     <?php
     }?>
     </td>
+
    
     </tr>
         <!-- echo ("<tr>");
