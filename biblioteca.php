@@ -71,6 +71,23 @@ if (mysqli_connect_errno()) {
         $idEditar = $_POST['editar'];
         
       }
+      $autor = "";
+      if(isset($_POST['confirmarIns'])){
+
+      $idInserta = $_POST['insertaid'];
+      $autor = $_POST['insertainp'];
+      $result = $mysqli->query("INSERT INTO autors(ID_AUT,NOM_AUT) VALUES ($idInserta,'$autor')");
+      $cerca = $autor;
+}
+
+      $valor = "";
+      if (isset($_POST['confirmar'])) {
+          $valor = $_POST['edicio'];
+          $btConfirmar = $_POST['confirmar'];
+          $result = $mysqli->query("UPDATE autors SET NOM_AUT = '$valor' WHERE ID_AUT = $btConfirmar");
+          $cerca = $valor;
+      }
+
       
       echo(print_r($_POST));
       $tuplaInici=$pagina * $limits;
@@ -120,14 +137,21 @@ if (mysqli_connect_errno()) {
       <input type="text" placeholder="Cerca NOM o ID..." name="cerca" id="cerca" value="<?=$cerca?>">
       <button class="btn btn-dark" id="butcercar" name="butcercar">CERCA PER NOM o ID</button>
   </label>
-      <label>
+      
       <!-- <h3>Paginacions</h3> -->
 <button name="PRIMER" class="btn btn-dark"><i class="fas fa-angle-double-left"></i></button>
 <button name="ANTERIOR" class="btn btn-dark"><i class="fas fa-angle-left"></i></button>
 <button name="SEGUENT" class="btn btn-dark"><i class="fas fa-angle-right"></i></button>
 <button name="DARRERA" class="btn btn-dark"><i class="fas fa-angle-double-right"></i></button>
 <button name="INSERTAR" class="btn btn-dark"><i></i>INSERTAR</button>
-      </label>
+<?php 
+
+if (isset($_POST['INSERTAR'])) { ?>
+    <input type="text" placeholder="Inserta el ID " name="insertaid">
+    <input type="text" placeholder="Inserta el nom del autor" name="insertainp">
+    <button class="btn btn-info" name="confirmarIns">CONFIRMA</button>
+
+<?php } ?>
       <!-- EDICIONS -->
       <!-- <button name="borrar" id="borrar" style="float: right" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
       <button name="editar" id="editar" style="float: right" class="btn btn-info"><i class="fas fa-edit"></i></button> -->
@@ -152,7 +176,7 @@ if ($result = $mysqli->query($query)) {
     <?php if($idEditar == $row['ID_AUT']){?> 
 
     <input type="text" name="edicio" id="edicio" value="<?=$row['NOM_AUT']?>">
-    <button name="confirmar" id="btConfirmar" style="float: right" class="btn btn-success">CONFIRMAR</button>
+    <button name="confirmar" id="btConfirmar" style="float: right" class="btn btn-success"  value="<?=$row['ID_AUT']?>">CONFIRMAR</button>
     <button name="cancelar" id="btCancelar" style="float: right" class="btn btn-danger">CANCELAR</button>
     <?php 
     $idEditar = 0;
